@@ -6,14 +6,19 @@ import userRouter from "./Routes/userRoute.js";
 
 //Make database connection
 await mongoose
-  .connect(process.env.MONGO_URI)
+  .connect(process.env.MONGO_URL)
   .then(() => console.log("Database connected"))
-  .catch((err) => console.log("error"));
+  .catch(err => console.log("error"));
 
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+
 app.use(userRouter);
 
-app.listen(3000, () => console.log(`Server is listening on PORT 3000`));
+app.use(cors());
+
+// const PORT = process.env.PORT || 4500;
+
+// Server listening on PORT 3000
+app.listen(4500, () => console.log(`Server is listening on PORT 4500`));

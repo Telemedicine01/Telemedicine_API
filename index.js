@@ -3,6 +3,8 @@ import express from "express";
 import "dotenv/config";
 import cors from "cors";
 import userRouter from "./Routes/userRoute.js";
+import chatRouter from './Routes/chatRoute.js';
+
 
 //Make database connection
 await mongoose
@@ -15,6 +17,7 @@ const app = express();
 app.use(express.json());
 
 app.use(userRouter);
+app.use(chatRouter);
 
 app.use(cors());
 

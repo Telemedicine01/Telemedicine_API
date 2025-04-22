@@ -53,6 +53,7 @@ articleRouter.delete(
 
 articleRouter.patch(
   "/articles/:id",
+  auth,
   articlePicturesUpload.array("image", 3),
   authorize(["doctor", "admin"]),
   updatePartofArticle

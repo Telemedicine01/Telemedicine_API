@@ -10,8 +10,7 @@ export const mailTransporter = createTransport({
   },
 });
 
-export const registerUserMailTemplate = 
-`<!DOCTYPE html>
+export const registerUserMailTemplate = `<!DOCTYPE html>
     <html>
   	<head>
   	  <style>
@@ -68,7 +67,7 @@ export const registerUserMailTemplate =
   		  TELEMED
   		</div>
   		<div class="body">
-  		  <p>Hello ${result.username},</p>
+  		  <p>Hello {{username}},</p>
   		  <p>We're thrilled to have you join our community! 🎉</p>
   		  <p>Your journey into the world of affordable healthcare starts now. Research, consult, and get in touch with doctors with ease!</p>
   		  <p>If you have any questions or need assistance, feel free to reach out to our support team.</p>
@@ -80,6 +79,7 @@ export const registerUserMailTemplate =
   	  </div>
   	</body>
     </html>`
+
 
 	
 // export const registerUserMailTemplate = async () => {

@@ -6,6 +6,7 @@ import {
   updateUserValidator,
 } from "../Validators/userValidators.js";
 import { UserModel } from "../Models/userModel.js";
+import { mailTransporter, registerUserMailTemplate } from "../Utils/mailling.js";
 
 
 export const registerUser = async (req, res, next) => {
@@ -32,8 +33,38 @@ export const registerUser = async (req, res, next) => {
   await mailTransporter.sendMail({
     from:'Nheemsha18@gmail.com',
     to: value.email,
-    subject: 'Nodemailer worked successfuly',
-    html: registerUserMailTemplate.replace('{{username}}', value.username),
+    subject: 'Welcome to Anthon Memorial Hospital',
+   html:registerUserMailTemplate.replace('{{username}}', value.username)console.log("Registering new user...");
+console.log("Validating user information...");
+console.log("Checking if user exists already...");
+console.log("Hashing plaintext password...");
+console.log("Creating user record in database...");
+console.log("Sending registration email to user...");
+console.log("Account registered successfully!");
+
+console.log("Logging in user...");
+console.log("Validating user information...");
+console.log("Finding matching user record in database...");
+console.log("Comparing incoming password with saved password...");
+console.log("Generating access token for user...");
+console.log("Returning response with token and role...");
+
+console.log("Updating user...");
+console.log("Validating request body...");
+console.log("Updating user in database...");
+console.log("Returning response...");
+
+console.log("Getting authenticated user...");
+console.log("Getting user by id using req.auth.id...");
+console.log("Returning response...");
+
+console.log("Getting all users...");
+console.log("Finding all users in database...");
+console.log("Returning response...");
+
+console.log("Deleting user...");
+console.log("Finding user by id and deleting...");
+console.log("Returning response...");
 })
   
   res.status(201).json("Account registered successfully");

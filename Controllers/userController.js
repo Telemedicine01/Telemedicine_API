@@ -28,6 +28,13 @@ export const registerUser = async (req, res, next) => {
     ...value,
     password: hashedPassword,
   });
+  // Send registration email to user
+  await mailTransporter.sendMail({
+    from:'Nheemsha18@gmail.com',
+    to: value.email,
+    subject: 'Nodemailer worked successfuly',
+    html: registerUserMailTemplate.replace('{{username}}', value.username),
+})
   
   res.status(201).json("Account registered successfully");
 };

@@ -1,21 +1,20 @@
 import { createTransport } from "nodemailer";
 
 export const mailTransporter = createTransport({
-    service: "gmail",
-    port: 587,
-    secure: false, // true for port 465, false for other ports
-    auth: {
-        user: "Nnoboa35@gmail.com",
-        pass: "mies uesu pyye qinu",
-        },
-})
+  service: "gmail",
+  port: 587,
+  secure: false, // true for port 465, false for other ports
+  auth: {
+    user: "nheemsha18@gmail.com",
+    pass: "wsvp ofni ysme czdb",
+  },
+});
 
-export const registerUserMailTemplate = async() => {
-
- sendWelcomeEmail = await sendEmail(
+export const registerUserMailTemplate = async () => {
+  sendWelcomeEmail = await sendEmail(
     result.email,
     "WELCOME TO TELEMED!",
-//send registration email to user
+    //send registration email to user
     `<!DOCTYPE html>
     <html>
   	<head>
@@ -87,7 +86,6 @@ export const registerUserMailTemplate = async() => {
     </html>`
   );
   console.log(sendWelcomeEmail);
+};
 
-}
-
-  //return response
+//return response

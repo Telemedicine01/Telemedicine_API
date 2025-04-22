@@ -24,5 +24,5 @@ app.use(cors());
 
 // const PORT = process.env.PORT || 4500;
 
-// Server listening on PORT 3000
+
 app.listen(4500, () => console.log(`Server is listening on PORT 4500`));

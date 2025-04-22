@@ -6,8 +6,10 @@ import {
   updateUserValidator,
 } from "../Validators/userValidators.js";
 import { UserModel } from "../Models/userModel.js";
-import { mailTransporter, registerUserMailTemplate } from "../Utils/mailling.js";
-
+import {
+  mailTransporter,
+  registerUserMailTemplate,
+} from "../Utils/mailling.js";
 
 export const registerUser = async (req, res, next) => {
   //validate user information
@@ -31,12 +33,12 @@ export const registerUser = async (req, res, next) => {
   });
   // Send registration email to user
   await mailTransporter.sendMail({
-    from:'Nheemsha18@gmail.com',
+    from: "Nheemsha18@gmail.com",
     to: value.email,
-    subject: 'Welcome to Anthon Memorial Hospital',
-   html:registerUserMailTemplate.replace('{{username}}', value.username)
-})
-  
+    subject: "Welcome to Anthon Memorial Hospital",
+    html: registerUserMailTemplate.replace("{{username}}", value.username),
+  });
+
   res.status(201).json("Account registered successfully");
 };
 
@@ -48,7 +50,7 @@ export const loginUser = async (req, res, next) => {
   }
   // find matching user record in database
   const user = await UserModel.findOne({
-    email: value.email
+    $or: [{ username: value.username }, { email: value.email }],
   });
   if (!user) {
     return res.status(404).json("user does not exists");

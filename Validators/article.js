@@ -4,6 +4,5 @@ export const addArticleValidator = Joi.object({
   title: Joi.string().required(),
   article: Joi.string().required(),
   image: Joi.array().items(Joi.string()),
-
   category: Joi.string(),
 });

@@ -3,8 +3,7 @@ import jwt from "jsonwebtoken";
 import {
   loginUserValidator,
   registerUserValidator,
-  updateUserValidator,
-} from "../Validators/userValidators.js";
+  updateUserValidator,} from "../Validators/userValidators.js";
 import { UserModel } from "../Models/userModel.js";
 import {
   mailTransporter,

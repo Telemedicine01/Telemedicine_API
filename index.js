@@ -3,14 +3,14 @@ import express from "express";
 import "dotenv/config";
 import cors from "cors";
 import userRouter from "./Routes/userRoute.js";
-import chatRouter from './Routes/chatRoute.js';
-
+import chatRouter from "./Routes/chatRoute.js";
+import articleRouter from "./Routes/article.js";
 
 //Make database connection
 await mongoose
   .connect(process.env.MONGO_URL)
   .then(() => console.log("Database connected"))
-  .catch(err => console.log("error"));
+  .catch((err) => console.log("error"));
 
 const app = express();
 
@@ -18,6 +18,7 @@ app.use(express.json());
 
 app.use(userRouter);
 app.use(chatRouter);
+app.use(articleRouter);
 
 app.use(cors());
 

@@ -7,7 +7,7 @@ import userRouter from "./Routes/userRoute.js";
 import chatRouter from "./Routes/chatRoute.js";
 import articleRouter from "./Routes/article.js";
 import {messageRouter} from "./Routes/message.js";
-import appointmentRoutes from "./routes/appointmentRoutes.js";
+import appointmentRouter from "./routes/appointmentRoutes.js";
 import http from 'http';
 import { Server } from 'socket.io';
 
@@ -30,7 +30,7 @@ app.use(userRouter);
 app.use(chatRouter);
 app.use(articleRouter);
 app.use(messageRouter);
-app.use(appointmentRoutes);
+app.use(appointmentRouter);
 
 //message
 app.use(cors());

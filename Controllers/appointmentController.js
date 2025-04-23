@@ -1,5 +1,5 @@
 import { Appointment } from "../Models/Appointment.js";
-import { sendAppointmentEmail } from "../utils/sendAppointmentEmail.js";
+import { sendAppointmentEmail } from "../Utils/sendAppointmentEmail.js";
 import { UserModel } from "../Models/userModel.js"; //User model
 
 // Patient books an appointment

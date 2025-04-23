@@ -7,6 +7,7 @@ import userRouter from "./Routes/userRoute.js";
 import chatRouter from "./Routes/chatRoute.js";
 import articleRouter from "./Routes/article.js";
 import {messageRouter} from "./Routes/message.js";
+import appointmentRoutes from "./routes/appointmentRoutes.js";
 import http from 'http';
 import { Server } from 'socket.io';
 
@@ -24,10 +25,12 @@ const app = express();
 
 app.use(express.json());
 
+//routes
 app.use(userRouter);
 app.use(chatRouter);
 app.use(articleRouter);
 app.use(messageRouter);
+app.use(appointmentRoutes);
 
 //message
 app.use(cors());

@@ -7,7 +7,7 @@ import userRouter from "./Routes/userRoute.js";
 import chatRouter from "./Routes/chatRoute.js";
 import articleRouter from "./Routes/article.js";
 import {messageRouter} from "./Routes/message.js";
-import appointmentRouter from "./routes/appointmentRoutes.js";
+import appointmentRouter from "./Routes/appointmentRoutes.js";
 import http from 'http';
 import { Server } from 'socket.io';
 

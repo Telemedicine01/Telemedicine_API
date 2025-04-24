@@ -23,6 +23,9 @@ dotenv.config();
 
 const app = express();
 
+//message
+app.use(cors());
+
 app.use(express.json());
 
 //routes
@@ -32,8 +35,7 @@ app.use(articleRouter);
 app.use(messageRouter);
 app.use(appointmentRouter);
 
-//message
-app.use(cors());
+
 
 const server = http.createServer(app); // Create HTTP server for the message
 const io = new Server(server, {

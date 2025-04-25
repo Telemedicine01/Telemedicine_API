@@ -3,28 +3,28 @@ import { addArticleValidator } from "../Validators/article.js";
 
 export const addArticle = async (req, res, next) => {
   try {
-    console.log(req.file, req.files);
-    //validate the product information
+    // Extract images as Cloudinary URLs
+    const images = req.files?.map((file) => file.path);
+
+    // Validate article input using Joi
     const { error, value } = addArticleValidator.validate(
       {
         ...req.body,
-        image: req.files?.map((file) => {
-          return file.filename;
-        }),
+        image: images,
       },
-      {
-        abortEarly: false,
-      }
+      { abortEarly: false }
     );
+
     if (error) {
-      return res.status(422).json(error.details[0].message);
+      return res.status(422).json({ message: error.details[0].message });
     }
-    //save product information in database
+
+    // Save article in MongoDB
     const result = await ArticleModel.create({
       ...value,
       doctorId: req.auth.id,
     });
-    //return response
+
     return res.status(201).json(result);
   } catch (error) {
     next(error);

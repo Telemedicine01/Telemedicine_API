@@ -1,5 +1,6 @@
 import { Router } from "express";
-import { auth, authorize } from "../Middlewares/authUser.js";
+import { authDoctor, authorizeDoctor } from "../Middlewares/authDoctor.js";
+import { authPatient } from "../Middlewares/authPatient.js";
 import { articlePicturesUpload } from "../Middlewares/article.js";
 import {
   addArticle,
@@ -10,54 +11,46 @@ import {
   updatePartofArticle,
 } from "../Controllers/article.js";
 
-// create product router
 const articleRouter = Router();
 
-//define routes
+// Doctor creating an article
 articleRouter.post(
   "/articles",
-  auth,
+  authDoctor,
   articlePicturesUpload.array("image", 3),
-  authorize(["doctor"]),
+  authorizeDoctor(["doctor"]),
   addArticle
 );
 
-articleRouter.get(
-  "/articles/:id",
-  auth,
-  authorize(["doctor", "patient", "admin"]),
-  getArticle
-);
-
-articleRouter.get(
-  "/articles",
-  auth,
-  authorize(["user", "doctor", "admin"]),
-  getAllArticle
-);
-
+// Doctor updating an article
 articleRouter.put(
   "/articles/:id",
-  auth,
+  authDoctor,
   articlePicturesUpload.array("image", 3),
-  authorize(["doctor", "admin"]),
+  authorizeDoctor(["doctor", "admin"]),
   updateArticle
 );
 
+// Doctor deleting an article
 articleRouter.delete(
   "/articles/:id",
-  auth,
-  authorize(["doctor", "admin"]),
+  authDoctor,
+  authorizeDoctor(["doctor", "admin"]),
   deleteArticle
 );
 
-articleRouter.patch(
+// Everyone fetching a single article
+articleRouter.get(
   "/articles/:id",
-  auth,
-  articlePicturesUpload.array("image", 3),
-  authorize(["doctor", "admin"]),
-  updatePartofArticle
+  authPatient,
+  getArticle
 );
 
-//export router
+// Everyone fetching all articles
+articleRouter.get(
+  "/articles",
+  authPatient,
+  getAllArticle
+);
+
 export default articleRouter;

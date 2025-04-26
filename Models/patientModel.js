@@ -1,54 +1,34 @@
 import { model, Schema } from "mongoose";
 import normalize from "normalize-mongoose";
 
-// Patient Profile Schema
 const patientSchema = new Schema(
-    {
-      user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-      dateOfBirth: { type: Date, required: true },
-      gender: { 
-        type: String, 
-        enum: ['male', 'female', 'other', 'prefer not to say'],
-        required: true 
-      },
-      bloodType: { 
-        type: String, 
-        enum: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-', 'unknown'],
-        default: 'unknown'
-      },
-      address: {
-        street: { type: String, required: true },
-        city: { type: String, required: true },
-        state: { type: String, required: true },
-        zipCode: { type: String, required: true },
-        country: { type: String, required: true }
-      },
-      emergencyContact: {
-        name: { type: String, required: true },
-        relationship: { type: String, required: true },
-        phoneNumber: { type: String, required: true }
-      },
-      primaryCarePhysician: { type: String },
-      allergies: [{ type: String }],
-      currentMedications: [
-        {
-          name: { type: String },
-          dosage: { type: String },
-          frequency: { type: String }
-        }
-      ],
-      chronicConditions: [{ type: String }],
-      insurance: {
-        provider: { type: String },
-        policyNumber: { type: String },
-        groupNumber: { type: String },
-        insuranceId: { type: String }
-      }
+  {
+    username: { type: String, required: true, unique: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    confirmPassword: { type: String, required: true },
+    dateOfBirth: { type: Date, required: true },
+    gender: { type: String, required: true },
+    bloodType: { type: String, required: true  },
+    Address: { type: String, required: true },
+    emergencyContact: {
+      name: { type: String, required: true },
+      relationship: { type: String, required: true },
+      phoneNumber: { type: String, required: true },
     },
-    {
-      timestamps: true
-    }
-  );
-  
-  patientSchema.plugin(normalize); 
-  export const patientModel = model("User", patientSchema);
+    primaryCarePhysician: { type: String },
+    allergies: { type: String },
+    CurrentMedication: { type: Date, required: true },
+    chronicConditions: { type: String },
+    insurance: {
+      provider: { type: String },
+      insuranceId: { type: String },
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+patientSchema.plugin(normalize);
+export const patientModel = model("patient", patientSchema);

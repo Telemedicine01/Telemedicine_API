@@ -21,22 +21,20 @@ export const createDoctorProfile = async (req, res) => {
     // Handle profile image upload if provided
     let profilePicture = "";
     if (req.file) {
-      try {
-        // Upload profile image to Cloudinary
-        const result = await cloudinaryUpload(req.file.buffer);
-
-        // Get the URL from the Cloudinary response
-        profilePicture = result.secure_url;
-      } catch (uploadError) {
-        console.error("Error uploading to Cloudinary:", uploadError);
-        return res.status(500).json({
-          success: false,
-          message: "Cloudinary upload failed",
-          error: uploadError.message,
-        });
-      }
-    }
-
+        try {
+          const result = await cloudinaryUpload(req.file.path);
+          profilePicture = result.secure_url;
+          fs.unlinkSync(req.file.path); // remove temp file
+        } catch (uploadError) {
+          console.error("Error uploading to Cloudinary:", uploadError);
+          return res.status(500).json({
+            success: false,
+            message: "Cloudinary upload failed",
+            error: uploadError.message,
+          });
+        }
+      }      
+      
     // Create the new doctor profile with all the provided data, including profile picture URL
     const newDoctorProfile = new DoctorProfileModel({
       ...req.body,

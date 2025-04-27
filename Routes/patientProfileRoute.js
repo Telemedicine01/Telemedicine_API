@@ -4,14 +4,15 @@ import {
   getPatientProfile,
 } from "../Controllers/patientProfileController.js";
 import { authPatient } from "../Middlewares/authPatient.js"; // your auth for patients
-import { profilePictureUpload } from "../Middlewares/upload.js"; // multer upload
+// import uploadProfilePic from "../Middlewares/upload.js";
+import upload from "../Middlewares/upload.js";
 
 const patientProfileRouter = Router();
 
 patientProfileRouter.post(
   "/patient-profile",
   authPatient,
-  profilePictureUpload.single("profilePicture"),
+  upload.single("profilePicture"),
   createOrUpdatePatientProfile
 );
 

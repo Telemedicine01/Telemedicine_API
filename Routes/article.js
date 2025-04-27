@@ -40,17 +40,9 @@ articleRouter.delete(
 );
 
 // Everyone fetching a single article
-articleRouter.get(
-  "/articles/:id",
-  authPatient,
-  getArticle
-);
+articleRouter.get("/articles/:id", authPatient, getArticle);
 
 // Everyone fetching all articles
-articleRouter.get(
-  "/articles",
-  authPatient,
-  getAllArticle
-);
+articleRouter.get("/articles", authPatient, getAllArticle);
 
 export default articleRouter;

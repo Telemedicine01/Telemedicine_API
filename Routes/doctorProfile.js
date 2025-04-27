@@ -1,6 +1,5 @@
 // routes/doctorProfileRoutes.js
-import express from 'express';
-import upload from 'multer';
+import express from "express";
 import {
   createDoctorProfile,
   getDoctorProfile,
@@ -8,56 +7,60 @@ import {
   getAllDoctorProfiles,
   updateDoctorProfile,
   deleteDoctorProfile,
-  updateAvailability
-} from '../Controllers/doctorProfileController.js';
+  updateAvailability,
+} from "../Controllers/doctorProfileController.js";
 import {
   validateProfileInput,
   checkProfileExists,
-  validateAvailability
-} from '../Middleware/doctorProfileMiddleware.js';
-import { authenticateToken, authorizeRole } from '../Middleware/doctorProfileMiddleware.js';
+  validateAvailability,
+} from "../Middlewares/doctorProfileMiddleware.js";
 
-const router = express.Router();
+import { authDoctor } from "../Middlewares/authDoctor.js";
+// import uploadProfilePic from "../Middlewares/upload.js";
+import upload from "../Middlewares/upload.js";
+
+// import uploadProfilePic from "../Middlewares/upload.js";
+
+const doctorProfileRouter = express.Router();
 // Public routes (no authentication required)
-router.get('/', getAllDoctorProfiles);
-router.get('/:id', getDoctorProfile);
-router.get('/doctor/:doctorId', getDoctorProfileByDoctorId);
+doctorProfileRouter.get("/", getAllDoctorProfiles);
+doctorProfileRouter.get("/:id", getDoctorProfile);
+doctorProfileRouter.get("/doctor/:doctorId", getDoctorProfileByDoctorId);
 
 // Protected routes (authentication required)
-router.post(
-  '/',
-  authenticateToken,
-  authorizeRole(['doctor', 'admin']),
-  upload.single('profilePicture'),
-  validateProfileInput,
+doctorProfileRouter.post(
+  "/doctors/profile",
+  authDoctor,
+
+  upload.single("profilePicture"),
+
   createDoctorProfile
 );
 
-router.put(
-  '/:id',
-  authenticateToken,
-  authorizeRole(['doctor', 'admin']),
+doctorProfileRouter.put(
+  "/:id",
+  authDoctor,
+
   checkProfileExists,
-  upload.single('profilePicture'),
+  // uplo.single("profilePicture"),
   updateDoctorProfile
 );
 
-router.patch(
-  '/:id/availability',
-  authenticateToken,
-  authorizeRole(['doctor', 'admin']),
+doctorProfileRouter.patch(
+  "/:id/availability",
+  authDoctor,
+
   checkProfileExists,
   validateAvailability,
   updateAvailability
 );
 
-router.delete(
-  '/:id',
-  authenticateToken,
-  authorizeRole(['doctor', 'admin']),
+doctorProfileRouter.delete(
+  "/:id",
+  authDoctor,
+
   checkProfileExists,
   deleteDoctorProfile
 );
 
-export default router;
-
+export default doctorProfileRouter;

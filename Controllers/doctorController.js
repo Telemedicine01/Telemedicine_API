@@ -6,7 +6,10 @@ import {
   loginDoctorValidator,
   updateDoctorValidator,
 } from "../Validators/doctorValidator.js";
-import { mailTransporter, registerUserMailTemplate } from "../Utils/mailling.js";
+import {
+  mailTransporter,
+  registerUserMailTemplate,
+} from "../Utils/mailling.js";
 
 // Register Doctor
 export const registerDoctor = async (req, res, next) => {
@@ -50,7 +53,9 @@ export const loginDoctor = async (req, res, next) => {
       return res.status(422).json(error.details[0].message);
     }
 
-    const doctor = await doctorModel.findOne({ email: value.email });
+    const doctor = await doctorModel.findOne({
+      $or: [{ username: value.username }, { email: value.email }],
+    });
     if (!doctor) {
       return res.status(404).json("Account does not exist");
     }

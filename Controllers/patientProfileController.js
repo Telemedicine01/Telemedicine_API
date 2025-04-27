@@ -1,5 +1,5 @@
 import { patientProfileModel } from "../Models/patientProfile.js";
-import { uploadToCloudinary } from "../Utils/cloudinary.js"; // cloudinary uploader
+import cloudinary from "../Utils/cloudinary.js";
 
 // Create or Update Patient Profile
 export const createOrUpdatePatientProfile = async (req, res) => {
@@ -8,7 +8,7 @@ export const createOrUpdatePatientProfile = async (req, res) => {
     let profileData = req.body;
 
     if (req.file) {
-      const uploadResult = await uploadToCloudinary(req.file.path);
+      const uploadResult = await cloudinary(req.file.path);
       profileData.profilePicture = uploadResult.secure_url;
     }
 
@@ -30,7 +30,9 @@ export const getPatientProfile = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const profile = await patientProfileModel.findOne({ patient: id }).populate("patient");
+    const profile = await patientProfileModel
+      .findOne({ patient: id })
+      .populate("patient");
 
     if (!profile) {
       return res.status(404).json({ error: "Profile not found" });

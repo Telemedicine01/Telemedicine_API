@@ -1,13 +1,14 @@
-import { Appointment } from "../Models/Appointment.js";
+import { AppointmentModel } from "../Models/Appointment.js";
 import { sendAppointmentEmail } from "../Utils/sendAppointmentEmail.js";
-import { UserModel } from "../Models/userModel.js"; //User model
+import { doctorModel } from "../Models/doctorModel.js"; // Doctor model
+import { patientModel } from "../Models/patientModel.js"; // Patient model
 
 // Patient books an appointment
 export const bookAppointment = async (req, res) => {
   try {
     const { doctorId, date, time } = req.body;
 
-    const appointment = await Appointment.create({
+    const appointment = await AppointmentModel.create({
       patientId: req.auth.id,
       doctorId,
       date,
@@ -16,12 +17,12 @@ export const bookAppointment = async (req, res) => {
 
     res.status(201).json({ message: "Appointment booked", appointment });
   } catch (err) {
-    console.error("Error booking appointment:", err);//show error on the server
+    console.error("Error booking appointment:", err);
     res.status(500).json({ error: "Failed to book appointment" });
   }
 };
 
-// Doctor confirms or rejects
+// Doctor confirms or rejects an appointment
 export const updateAppointmentStatus = async (req, res) => {
   try {
     const { id } = req.params;
@@ -43,8 +44,9 @@ export const updateAppointmentStatus = async (req, res) => {
 
     console.log("Found appointment:", appointment);
 
-    const patient = await UserModel.findById(appointment.patientId);
-    const doctor = await UserModel.findById(appointment.doctorId);
+    // Fetch patient and doctor separately from patientModel and doctorModel
+    const patient = await patientModel.findById(appointment.patientId);
+    const doctor = await doctorModel.findById(appointment.doctorId);
 
     if (!patient || !doctor) {
       console.log("Could not find patient or doctor");
@@ -55,8 +57,8 @@ export const updateAppointmentStatus = async (req, res) => {
 
     await sendAppointmentEmail({
       to: [patient.email, doctor.email],
-      patientName: patient.name,
-      doctorName: doctor.name,
+      patientName: patient.username, // use username or name field
+      doctorName: doctor.professionalTitle, // or doctor.username depending on your schema
       date: appointment.date,
       time: appointment.time,
       status,
@@ -68,3 +70,4 @@ export const updateAppointmentStatus = async (req, res) => {
     res.status(500).json({ error: "Failed to update appointment" });
   }
 };
+
